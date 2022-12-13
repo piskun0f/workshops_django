@@ -1,1 +1,1 @@
-docker-compose logs -n 500
+docker-compose logs
