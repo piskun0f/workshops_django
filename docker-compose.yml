@@ -1,18 +1,53 @@
 version: '3.3'
 
 services:
-  app:
+  app_master:
     build:
-      context: ./src
+      context: src
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
     depends_on:
-      - db
-  db:
-    image: "postgres:13.5-alpine"
+      - postgresql-master
+
+  app_slave:
+    build:
+      context: ./slave/src
+      dockerfile: Dockerfile
     ports:
-      - "5432:5432"
+      - "8001:8001"
+    depends_on:
+      - postgresql-slave
+
+  postgresql-master:
+    image: docker.io/bitnami/postgresql:14
+    ports:
+      - '5432'
+    volumes:
+      - 'postgresql_master_data:/bitnami/postgresql'
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=postgres
+      - ALLOW_EMPTY_PASSWORD=yes
+  postgresql-slave:
+    image: docker.io/bitnami/postgresql:14
+    ports:
+      - '5432'
+    depends_on:
+      - postgresql-master
+    environment:
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_MASTER_HOST=postgresql-master
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+      - ALLOW_EMPTY_PASSWORD=yes
+
+volumes:
+  postgresql_master_data:
+    driver: local

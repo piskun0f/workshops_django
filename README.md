@@ -1,12 +1,7 @@
-# Django with PostgreSQL
-
-One-minute deployment, simple web-application.
-
-*It is not recommended to deploy a core database as a container. This example shows how to handle the multi-container situation, when one container (Django) strongly depends on the other container (database).*
-
+# Workshops in django
 
 ## Getting Started
-![Screen Shopt](images/main-screenshot.png?raw=true "Screen Shot")
+![Screen Shopt](images/main-screenshot.jpg?raw=true "Screen Shot")
 Two containers
   * web app(Django)
   * database(PostgreSQL)
