@@ -1,3 +1,5 @@
+rm -rf master
+rm -rf slave
 mkdir master
 mkdir slave
 cp -r src ./master
