@@ -3,7 +3,7 @@ version: '3.3'
 services:
   app_master:
     build:
-      context: src
+      context: ./master/src
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
@@ -33,6 +33,7 @@ services:
       - POSTGRESQL_PASSWORD=postgres
       - POSTGRESQL_DATABASE=postgres
       - ALLOW_EMPTY_PASSWORD=yes
+
   postgresql-slave:
     image: docker.io/bitnami/postgresql:14
     ports:

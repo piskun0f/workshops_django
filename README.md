@@ -11,5 +11,4 @@
 
 ### Master-slave docker-compose
 
-1. `sh ./init.sh`
 1. `docker-compose up -d`
