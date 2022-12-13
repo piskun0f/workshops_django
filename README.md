@@ -2,74 +2,14 @@
 
 ## Getting Started
 ![Screen Shopt](images/main-screenshot.jpg?raw=true "Screen Shot")
-Two containers
-  * web app(Django)
-  * database(PostgreSQL)
 
-If a container (Django) should be launched after another container(postgres) we can define it in the `depends_on` field.
+### Local usage
 
-```
-version: '3.3'
+1. `python -m venv venv`
+1. `source venv/Scripts/activate`
+1. `sh ./src/entry_point`
 
-services:
-  app:
-    build:
-      context: ./src
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-  db:
-    image: "postgres:13.5-alpine"
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+### Master-slave docker-compose
 
-```
-
-
-
-
-### Prerequisites
-
-Make sure you have already installed both Docker Engine and Docker Compose.
-You don’t need to install Python or PostgreSQL, as both are provided by Docker images.
-
-```
-$ docker -v
-Docker version 18.03.1-ce, build 9ee9f40
-$ docker-compose -v
-docker-compose version 1.21.1, build 5a3f1a3
-```
-
-### Installation
-
-```
-git clone https://github.com/thejungwon/docker-webapp-django.git
-cd docker-webapp-django
-docker-compose up
-```
-
-## Running the tests
-
-TBD
-
-### Break down into end to end tests
-
-TBD
-
-### And coding style tests
-
-TBD
-
-
-
-## Built With
-
-* [Django](https://www.djangoproject.com/) - Web framework
-* [PostgreSQL](https://www.postgresql.org/) - Database
-* [Bootstrap](https://getbootstrap.com/) - Front-end framework
-
+1. `sh ./init.sh`
+1. `docker-compose up -d`
